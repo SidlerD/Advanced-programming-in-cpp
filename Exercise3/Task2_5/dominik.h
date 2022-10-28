@@ -25,6 +25,9 @@ struct dominik {
             int score = gamelogic::best_play(f, row, playerchar);
             if(score > max_score){ max_score = score; max_row = row; }
         }
+
+        // TODO: Could do the same with enemy char, and see if he has any scores of 3 
+        // that we need to prevent from becoming 4
         
         if(max_score == -1) throw "Couldn't find any row to make points";
         return max_row;

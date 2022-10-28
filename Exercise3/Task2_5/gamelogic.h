@@ -13,15 +13,14 @@ namespace gamelogic{
     // Check vertical
     template <typename F>
     int vertical(F &field, int row, char player){
-        int combo = 0, max_combo = 0,
-            col = get_col_from_row(field, row);
+        int combo = 0, col = get_col_from_row(field, row);
         for(int i=col; i<field.height; ++i){ 
             char stone = field.stoneat(row, i);
             if(stone == player) ++combo;
-            else { max_combo = std::max(combo, max_combo); combo = 0;}
+            else { return combo; }
             if(combo == 4) return 4; // Player won
         }
-        return std::max(max_combo, combo);
+        return combo;
     }
 
     // Check horizontal
@@ -32,7 +31,15 @@ namespace gamelogic{
         for(int i=0; i<field.width; ++i){
             char stone = field.stoneat(i, col);
             if(stone == player) ++combo; 
-            else { max_combo = std::max(combo, max_combo); combo = 0;}
+            else { break; }
+            if(combo == 4) return 4; // Player won
+        }
+        
+        max_combo = std::max(combo, max_combo); combo = 0;
+        for(int i=0; i>=0; --i){
+            char stone = field.stoneat(i, col);
+            if(stone == player) ++combo; 
+            else { break; }
             if(combo == 4) return 4; // Player won
         }
         return std::max(max_combo, combo);

@@ -34,7 +34,7 @@ namespace gamelogic{
             else { break; }
             if(combo == 4) return 4; // Player won
         }
-        
+
         max_combo = std::max(combo, max_combo); combo = 0;
         for(int i=0; i>=0; --i){
             char stone = field.stoneat(i, col);
@@ -44,37 +44,46 @@ namespace gamelogic{
         }
         return std::max(max_combo, combo);
     }
+    
     // Check cross-down
     template <typename F>
     int down(F &field, int row, char player){
-        int combo = 0, max_combo = 0,
+        int left = 0, right = 0,
             col = get_col_from_row(field, row);
-        int closer_edge = std::min(row, col); 
-        int x = row - closer_edge,
-            y = col - closer_edge;
+        int x = row,
+            y = col;
         while(x < field.width && y < field.height){
-            if(field.stoneat(x, y) == player) ++combo;
-            else { max_combo = std::max(combo, max_combo); combo = 0;}
-            if(combo == 4) return 4;
+            if(field.stoneat(x, y) == player) ++right;
+            else { break;}
             ++x; ++y;
         }
-        return std::max(max_combo, combo);
+        x=row; y = col;
+        while(x >= 0 && y >= 0){
+            if(field.stoneat(x, y) == player) ++left;
+            else { break;}
+            --x; --y;
+        }
+        return left + right - 1; // -1 since new chip at (row, col) is counted twice
     }
     // Check cross-up /
     template <typename F>
     int up(F &field, int row, char player){
-        int combo = 0, max_combo = 0,
+        int left = 0, right = 0,
             col = get_col_from_row(field, row);
-        int closer_edge = std::min(row, field.height - col - 1);
-        int x = row - closer_edge,
-            y = col + closer_edge;
+        int x = row,
+            y = col;
         while(x < field.width && y >= 0){
-            if(field.stoneat(x, y) == player) ++combo;
-            else { max_combo = std::max(combo, max_combo); combo = 0;}
-            if(combo == 4) return 4;
+            if(field.stoneat(x, y) == player) ++right;
+            else { break; }
             ++x; --y;
         }
-        return std::max(max_combo, combo);
+        x=row; y = col;
+        while(x >= 0 && y < field.height){
+            if(field.stoneat(x, y) == player) ++left;
+            else { break; }
+            --x; ++y;
+        }
+        return left + right - 1;
     }
 
     // Get the highest possible points after playing chip in row

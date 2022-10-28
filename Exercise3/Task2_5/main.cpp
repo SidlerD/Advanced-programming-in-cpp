@@ -5,7 +5,7 @@
 #include "playfield.h"
 
 int main(){
-    connect_four<human_player<playfield>, human_player<playfield>, playfield> game;
+    connect_four<human_player<playfield>, dominik<playfield>, playfield> game;
     game.run();
     return 0;
 }

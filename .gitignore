@@ -33,6 +33,5 @@
 
 # Misc
 *.txt
-*.xlsx
 *.json
 .vscode/*

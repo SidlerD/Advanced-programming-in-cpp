@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "*.md": "markdown",
-        "iostream": "cpp",
-        "fstream": "cpp",
-        "sstream": "cpp",
-        "iosfwd": "cpp"
-    }
-}

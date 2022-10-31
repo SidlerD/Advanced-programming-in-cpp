@@ -1,22 +1,11 @@
 #include <string>
 #include <iostream>
-#include "Pvector.h"
+#include "pvector.h"
+#include "pset.h"
 
-using namespace std;
-
-/* Problems:
- * String: If user pushes string with spaces, destroys pvec and opens it again,
-           every word in that original string ends up as individual string
- * double: Number gets rounded when writing to file
-           https://stackoverflow.com/questions/18130511/unexpected-rounding-of-double-types-in-c-writing-to-file
-
- * int: Values with leading 0's lead to weird values written to file
-        But this seems to be a something else, not a problem with my class
- */
-
-int main(int argc, char**argv){
-    string fname = (argc > 1) ? argv[1] : "pvector.txt";
-    Pvector<string> vec(fname);
+void pvec_examples(std::string fname){
+    std::cout << "<<<<<<<<< pvector >>>>>>>>>" << std::endl;
+    pvector<std::string> vec(fname);
     vec.push_back("Hello world this is all in one string");
     vec.push_back("This is a new string");
 
@@ -33,6 +22,31 @@ int main(int argc, char**argv){
     // int_vec.push_back(-1010101010);
 
     // std::cout << int_vec;
+    std::cout << "-------------------------" << std::endl;
+}
+
+void pset_examples(std::string fname){
+    std::cout << "<<<<<<<<< pset >>>>>>>>>" << std::endl;
+    pset<std::string> set(fname);
+    std::string input;
+    while (true)
+    {
+        std::getline(std::cin, input);
+        if(input == "q") break;
+        set.insert(input);
+    }
+    
+
+    std::cout << set;
+    std::cout << "-------------------------" << std::endl;
+}
+
+
+int main(int argc, char**argv){
+    std::string vec_fname = (argc > 1) ? argv[1] : "pvector.txt";
+    std::string set_fname = (argc > 2) ? argv[2] : "pset.txt";
+    // pvec_examples(vec_fname);
+    pset_examples(set_fname);
 
     return 0;
 }

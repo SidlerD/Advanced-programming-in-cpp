@@ -8,7 +8,7 @@
 
 
 template <typename T, typename P=persistence_traits<T>>
-class Pvector{
+class pvector{
     std::string filename;
     std::vector<T> v;
 
@@ -26,11 +26,11 @@ class Pvector{
         for (const T &elem : v) persistence_traits<T>::write(ofs, elem);
     }
 public:
-    Pvector<T, P>(std::string fname): filename(fname) { readvector(); }
+    pvector<T, P>(std::string fname): filename(fname) { readvector(); }
 
-    ~Pvector<T, P>() { writevector(); }
+    ~pvector<T, P>() { writevector(); }
 
-    friend std::ostream& operator<<(std::ostream &os, Pvector<T, P> &vec){
+    friend std::ostream& operator<<(std::ostream &os, pvector<T, P> &vec){
         auto first = vec.v.begin(); auto last = vec.v.end();
         while(first != last) os << *(first++) << ", ";
         return os << std::endl;

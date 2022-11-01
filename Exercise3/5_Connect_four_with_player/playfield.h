@@ -18,12 +18,12 @@ struct playfield {
     int stoneat(int x, int y) const { return rep[x][y]; }
     void insertat(char val, int x, int y) { rep[x][y] = val; }
 
-    void insert(int row, char player){
-        if(row < 0 || row >= width) throw std::invalid_argument("Choose row within field");
+    void insert(int col, char player){
+        if(col < 0 || col >= width) throw std::invalid_argument("Choose col within field");
         int h = height-1;
         while(h >= 0){
-            if(stoneat(row, h) == none) {
-                insertat(player, row, h);
+            if(stoneat(col, h) == none) {
+                insertat(player, col, h);
                 return;
             };
             h--;
@@ -34,9 +34,9 @@ struct playfield {
 
     friend std::ostream& operator<<(std::ostream &os, const playfield& f){
         for(int h=0; h<f.height; ++h){
-            for(int row=0; row<f.width; ++row){
-                char stone = f.stoneat(row, h);
-                std::cout << '|' << f.stoneat(row, h);
+            for(int col=0; col<f.width; ++col){
+                char stone = f.stoneat(col, h);
+                std::cout << '|' << f.stoneat(col, h);
             }
             std::cout << '|' << std::endl;
         }

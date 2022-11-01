@@ -26,23 +26,22 @@ namespace gamelogic{
     // Check horizontal
     template <typename F>
     int horizontal(F &field, int row, char player){
-        int combo = 0, max_combo = 0,
+        int left = 0, right = 0,
             col = get_col_from_row(field, row);
-        for(int i=0; i<field.width; ++i){
+        for(int i=row; i < field.width; ++i){
             char stone = field.stoneat(i, col);
-            if(stone == player) ++combo; 
+            if(stone == player) ++right; 
             else { break; }
-            if(combo == 4) return 4; // Player won
+            if(right == 4) return 4; // Player won
         }
 
-        max_combo = std::max(combo, max_combo); combo = 0;
-        for(int i=0; i>=0; --i){
+        for(int i=row; i>=0; --i){
             char stone = field.stoneat(i, col);
-            if(stone == player) ++combo; 
+            if(stone == player) ++left; 
             else { break; }
-            if(combo == 4) return 4; // Player won
+            if(left == 4) return 4; // Player won
         }
-        return std::max(max_combo, combo);
+        return left + right - 1;
     }
     
     // Check cross-down

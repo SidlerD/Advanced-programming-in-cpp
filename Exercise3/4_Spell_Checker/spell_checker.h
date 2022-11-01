@@ -5,6 +5,7 @@
 #include "pset.h"
 #include <vector>
 
+// Persistence traits that read every word separately, not every sentence
 struct persistence_traits_for_words {
     static void read(std::ifstream &i, std::string &elem) {
         i >> elem;
@@ -18,17 +19,6 @@ struct persistence_traits_for_words {
 class spell_checker{
     std::string dict_loc, text_loc;
     pset<std::string, persistence_traits_for_words> dict;
-
-    // std::set<std::string> extract_dict(){
-    //     std::ifstream dict_stream(dict_loc);
-    //     std::string word;
-    //     std::set<std::string> set;
-    //     while(dict_stream.good()){
-    //         dict_stream >> word;
-    //         set.insert(word);
-    //     }
-    //     return set;
-    // }
 
     void check_words(){
         std::ifstream ifs(text_loc);
@@ -47,8 +37,11 @@ class spell_checker{
     }
 
 public:
-    spell_checker(std::string dictl, std::string textl): dict_loc(dictl), text_loc(textl), dict(dictl) {
-        // extract_dict();
-        check_words();
+    spell_checker(std::string dictl, std::string textl): 
+        dict_loc(dictl), 
+        text_loc(textl), 
+        dict(dictl) 
+    { 
+        check_words(); 
     }
 };  

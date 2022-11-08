@@ -1,5 +1,6 @@
 #pragma once
 #include "pvector.h"
+#include <complex>
 
 template <typename T>
 struct min_trait{

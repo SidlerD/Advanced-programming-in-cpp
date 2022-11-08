@@ -15,6 +15,7 @@ public:
     ~smart_pointer<T>(){
         --(*cnt);
         if(*cnt == 0) {
+            std::cout << "free()" << (void*) cnt << std::endl;
             delete pointer;
             free(cnt);
         }

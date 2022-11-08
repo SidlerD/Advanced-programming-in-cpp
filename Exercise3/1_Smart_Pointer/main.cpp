@@ -56,6 +56,7 @@ smart_pointer<Object> smart_pointer_examples(){
     smart_pointer<Object> r(o2); // ref counter is 1 for 2nd object
     std::cout << "r(o2).counter: " << r.counter() << std::endl;         // displays 1
     q=r; // decrease counter for 1st object and
+    // p=q;
     // increase counter for 2nd object (overload assignment operator)
     std::cout << "q=r, then" << std::endl;
     std::cout << "\tp.cnt = " << p.counter() << std::endl;              // displays 1
@@ -83,12 +84,12 @@ int main(){
     // smart_pointer<std::string> q(p);
     // std::cout << ", q: " << q.counter() << std::endl;
 
-    Object o(5);
-    smart_pointer<Object> p(&o);
-    smart_pointer<Object> q(p);
-    std::cout << "p.cnt = " << p.counter() << ", q.cnt = " << q.counter() << std::endl;
-    delete &p; std::cout << "delete &p" << std::endl;
-    std::cout << "q.cnt = " << q.counter() << std::endl;
+    // Object o(5);
+    // smart_pointer<Object> p(&o);
+    // smart_pointer<Object> q(p);
+    // std::cout << "p.cnt = " << p.counter() << ", q.cnt = " << q.counter() << std::endl;
+    // delete &p; std::cout << "delete &p" << std::endl;
+    // std::cout << "q.cnt = " << q.counter() << std::endl;
 
     return 0;
 }

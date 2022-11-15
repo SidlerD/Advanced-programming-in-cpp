@@ -4,18 +4,29 @@
 #include <iostream>
 #include <iterator>
 #include <algorithm>
+#include <map>
 
 // https://devblogs.microsoft.com/oldnewthing/20190619-00/?p=102599
 template<typename C, typename T = typename C::value_type>
-std::vector<T> merge(const C& cont1, const C& cont2){
-    std::vector<T> vec; vec.reserve(cont1.size() + cont2.size());
+C merge(const C& cont1, const C& cont2){
+    C m(cont1); // Copy contents of container 1
 
-    std::copy(cont1.begin(), cont1.end(), std::back_inserter(vec));
-    std::copy(cont2.begin(), cont2.end(), std::back_inserter(vec));
+    std::copy(cont2.begin(), cont2.end(), std::inserter(m, m.end())); // Copy contents of container 2
     
-    // Display 
-    std::copy(vec.begin(), vec.end(),
-        std::ostream_iterator<T>(std::cout, " "));
+    return m;
+}
+
+template <typename T>
+void display_merged(T container){
+    std::copy(container.begin(), container.end(),
+        std::ostream_iterator<typename T::value_type>(std::cout, " "));
+    
     std::cout << std::endl;
-    return vec;
+}
+
+template<typename K, typename V>
+void display_merged_map(std::map<K, V> map){
+    for(const auto& elem: map){
+        std::cout << elem.first << ": " << elem.second << std::endl;
+    }
 }

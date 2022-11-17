@@ -60,7 +60,7 @@ void display_merged(std::stack<T> container){
 
 
 template<typename K, typename V>
-void display_merged_map(std::map<K, V> map){
+void display_merged(std::map<K, V> map){
     for(const auto& elem: map){
         std::cout << elem.first << ": " << elem.second << std::endl;
     }

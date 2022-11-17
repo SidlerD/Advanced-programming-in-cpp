@@ -42,5 +42,6 @@ int main(){
     display_merged(vec_examples());
     display_merged(set_examples());
     display_merged_map(map_examples());
+    display_merged(stack_examples());
     return 0;
 }

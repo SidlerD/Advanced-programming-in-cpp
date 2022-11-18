@@ -17,16 +17,16 @@ namespace game{
 
 
 
-template<typename F> // Field
+template<typename I, class F = field_wrapper<I>> // Field
 struct dominik {
     char playerchar = -1, enemychar = -2; 
     std::string name;
     game::coord first_round; int round;
 
     // returns the column where the player decides to insert his stone
-    int play(const F &field){
+    int play(const I &field){
         if(round == 0){ // Save & make default play
-            field_wrapper<F> f(field);
+            F f(field);
             int col = 3; ++round; 
             int row = f.insert(col, 1);
             first_round.x = col; first_round.y = row;
@@ -40,7 +40,7 @@ struct dominik {
         game::move my_play = get_best_play(field, playerchar);
         
         if(my_play.score == -1) {
-            std:: cout << "Error: Couldn't find any old_row to make points. Playing 3 as default" << std::endl;
+            std:: cout << "Error: Couldn't find any col to make points. Playing 3 as default" << std::endl;
             return 3;
         }
         if(my_play.score == 4) return my_play.col;
@@ -55,7 +55,7 @@ struct dominik {
 private:
     game::move get_best_play(const F &f, char player){
         int max_score = -1, max_col = 0;
-        field_wrapper<F> field(f);
+        F field(f);
 
         // Try all cols and check for highest combo
         for(int col=0; col<field.width; ++col){

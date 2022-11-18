@@ -38,7 +38,7 @@ class connect_four{
     }
 
 public:
-    connect_four(): player1("Player 1"), player2("Player 2") { };
+    connect_four() { };
 
     void run(){
         for(;;){
@@ -51,7 +51,7 @@ public:
             bool game_won = make_move(col, player1_char);
             std::cout << field;
             if(game_won) {
-                std::cout << std::endl << player1.name << " won";
+                std::cout << std::endl << "Player 1 won";
                 return;
             }
             // Player2
@@ -63,7 +63,7 @@ public:
             game_won = make_move(col, player2_char);
             std::cout << field;
             if(game_won){
-                std::cout << std::endl << player2.name << " won";
+                std::cout << std::endl << "Player 2 won";
                 return;
             }
         }

@@ -7,6 +7,7 @@ struct field_wrapper {
     F f; int width; int height; char none;
 
     field_wrapper(const F field): f(field), width(f.width), height(f.height), none(f.none){}; // Copies field
+    field_wrapper(const field_wrapper<F>& field): f(field.f), width(f.width), height(f.height), none(f.none){}; // Copies field
     field_wrapper(): f(), width(f.width), height(f.height), none(f.none){}; // Creates new field
 
     int stoneat(int x, int y) const { return f.stoneat(x, y); }

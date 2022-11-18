@@ -60,6 +60,8 @@ private:
         // Try all cols and check for highest combo
         for(int col=0; col<field.width; ++col){
             int row = field.insert(col, player);
+            if(row == -1) continue;
+            
             int score = gamelogic::best_play(field, col, player);
             if(score > max_score){ max_score = score; max_col = col; }
             field.deleteat(col, row); // Reset field

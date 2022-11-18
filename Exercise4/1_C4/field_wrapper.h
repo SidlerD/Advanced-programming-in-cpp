@@ -26,7 +26,8 @@ struct field_wrapper {
             };
             h--;
         }
-        throw std::invalid_argument("Row is already full!");
+        return -1;
+        // throw std::invalid_argument("Row is already full!");
 
     }
 

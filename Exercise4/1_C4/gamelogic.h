@@ -3,11 +3,11 @@
 namespace gamelogic{
     template <typename F>
     int get_row_from_col(F &field, int col){
-        int row = 0;
-        for(; row < field.height; ++row) {
+        for(int row = 0; row < field.height; ++row) {
             if(field.stoneat(col, row) != field.none) return row; // TODO: If col is full, this should return that
         }
-        throw ("Col not found"); // Should not happen since stone was dropped in that col
+        return -1;
+        // throw ("Row not found"); // Should not happen since stone was dropped in that col
     }
     
     // Check vertical
@@ -88,6 +88,7 @@ namespace gamelogic{
     // Get the highest possible points after playing chip in col
     template <typename F>
     int best_play(F &field, int col, char player){
+        if(get_row_from_col(field, col) == -1) return -1;
         return std::max(
             std::max(
                 vertical(field, col, player),

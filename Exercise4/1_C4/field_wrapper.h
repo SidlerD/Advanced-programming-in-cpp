@@ -1,6 +1,7 @@
 #pragma once
 #include <stdexcept>
 #include <iostream>
+#include <map>
 
 template <typename F>
 struct field_wrapper {
@@ -16,7 +17,7 @@ struct field_wrapper {
 
     // returns row where stone was inserted
     int insert(int col, char player){
-        if(col < 0 || col >= f.width) throw std::invalid_argument("Choose col within field");
+        if(col < 0 || col >= f.width) throw std::invalid_argument("Choose col within field!");
         int h = f.height-1;
         while(h >= 0){
             if(f.stoneat(col, h) == f.none) {
@@ -25,15 +26,17 @@ struct field_wrapper {
             };
             h--;
         }
-        throw std::invalid_argument("Row is already full");
+        throw std::invalid_argument("Row is already full!");
 
     }
 
     friend std::ostream& operator<<(std::ostream &os, const field_wrapper<F>& f){
+        std::map<char, char> m;
+        m = {{0, ' '}, {1, '1'}, {2, '2'}};
         for(int h=0; h<f.height; ++h){
             for(int col=0; col<f.width; ++col){
                 char stone = f.stoneat(col, h);
-                std::cout << '|' << f.stoneat(col, h);
+                std::cout << '|' << m[stone];
             }
             std::cout << '|' << std::endl;
         }

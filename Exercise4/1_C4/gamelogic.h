@@ -5,7 +5,7 @@ namespace gamelogic{
     int get_row_from_col(F &field, int col){
         int row = 0;
         for(; row < field.height; ++row) {
-            if(field.stoneat(col, row) != field.none) return row;
+            if(field.stoneat(col, row) != field.none) return row; // TODO: If col is full, this should return that
         }
         throw ("Col not found"); // Should not happen since stone was dropped in that col
     }

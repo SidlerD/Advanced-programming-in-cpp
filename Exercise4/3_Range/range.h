@@ -5,17 +5,18 @@
 #include <numeric>
 
 class range{
-    int s, e, curr;
+    int s, e;
     // TODO: Check if there's a better way of doing this: For large ranges, this will take up a lot of space
     // Watch the podcast for this bc I think he mentioned it when presenting the exercises
     std::vector<int> vec;
 
 public:
     typedef typename std::vector<int>::iterator iterator;
-    range(int start, int end): s(start), e(end), curr(s), vec(e-s){
-        if(s >= e){
+    range(int start, int end): s(start), e(end), vec(e>s ? e-s : 1) {
+        if(s > e){
             throw std::invalid_argument("Start is greater than end for range!");
         }
+
         std::iota(vec.begin(), vec.end(), s);
     }
 

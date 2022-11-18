@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <chrono>
 
 void benchmark(){
     // Setup
@@ -14,11 +15,20 @@ void benchmark(){
     auto string_lambda = [](std::string s) {return s == "world";};
 
     // Benchmark int
+    auto start = std::chrono::high_resolution_clock::now();
     auto elemInt = std::find_if(intvec.begin(), intvec.end(), int_lambda);
-    std::cout << *elemInt << std::endl;
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << *elemInt << " was found in " << 
+        std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count()  
+        << " ms" << std::endl;
+    
     // Benchmark string
+    start = std::chrono::high_resolution_clock::now();
     auto elemString = std::find_if(stringvec.begin(), stringvec.end(), string_lambda);
-    std::cout << *elemString << std::endl;
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << *elemString << " was found in " << 
+        std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count()  
+        << " ms" << std::endl;
 }
 
 int main(){

@@ -2,6 +2,7 @@
 #include <vector>
 #include "../field/field_wrapper.h"
 #include "player.h"
+#include "../game/gamelogic.h"
 
 namespace game{
     // Column played and score achieved by play
@@ -18,7 +19,7 @@ namespace game{
 
 
 
-struct dominik: player{
+struct my_player: player{
     char playerchar = -1, enemychar = -2; 
     std::string name;
     game::coord first_round; int round;
@@ -50,7 +51,7 @@ struct dominik: player{
         else return my_play.col;
     }
 
-    dominik(std::string player_name = "dominik"): name(player_name), round(0) {};
+    my_player(std::string player_name = "my_player"): name(player_name), round(0) {};
     // virtual ~player() { free(name); }
 
 private:

@@ -27,10 +27,11 @@ struct my_player: player{
     // returns the column where the player decides to insert his stone
     virtual int play(const playfield &field){
         if(round == 0){ // Save & make default play
-            field_wrapper f(field);
             int col = 3; ++round; 
-            int row = f.insert(col, 1);
+            char rep[field.width][field.height]; memcpy(rep, field.rep, field.width*field.height*sizeof(char));
+            int row = fu::insert(rep, col, 1);
             first_round.x = col; first_round.y = row;
+
             return col; 
         }
         if(round == 1){ // Set correct chars
@@ -57,16 +58,17 @@ struct my_player: player{
 private:
     game::move get_best_play(const playfield &f, char player){
         int max_score = -1, max_col = 0;
-        field_wrapper field(f);
+        char rep[playfield::width][playfield::height];
+        memcpy(rep, f.rep, f.width*f.height*sizeof(char));
 
         // Try all cols and check for highest combo
-        for(int col=0; col<field.width; ++col){
-            int row = field.insert(col, player);
+        for(int col=0; col<f.width; ++col){
+            int row = fu::insert(rep, col, player);
             if(row == -1) continue;
             
-            int score = gamelogic::best_play(field, col, player);
+            int score = gamelogic::best_play(f, col, player);
             if(score > max_score){ max_score = score; max_col = col; }
-            field.deleteat(col, row); // Reset field
+            fu::deleteat(rep, col, row); // Reset field
         }
         
         return game::move(max_score, max_col);

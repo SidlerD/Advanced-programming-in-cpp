@@ -3,11 +3,11 @@
 #include "../field/field_wrapper.h"  
 #include <iostream>
 
-template <typename P, typename E, typename F>
+template <typename P, typename E>
 class connect_four{
     P player1; char player1_char = 1;
     E player2; char player2_char = 2;
-    field_wrapper field;
+    playfield field;
     
     bool check_move(int col){
         bool res = false;
@@ -19,7 +19,7 @@ class connect_four{
     }
 
     bool make_move(int col, char player){
-        field.insert(col, player);
+        fu::insert(field, col, player);
 
         // Check vertical
         int combo = gamelogic::vertical(field, col, player);
@@ -45,11 +45,11 @@ public:
             // Player1
             bool move_possible = false; int col;
             while(!move_possible){
-                col = player1.play(field.f);
+                col = player1.play(field);
                 move_possible = check_move(col);
             }
             bool game_won = make_move(col, player1_char);
-            std::cout << field;
+            std::cout << fu::str(field);
             if(game_won) {
                 std::cout << std::endl << "Player 1 won";
                 return;
@@ -57,11 +57,11 @@ public:
             // Player2
             move_possible = false;
             while(!move_possible){
-                col = player2.play(field.f);
+                col = player2.play(field);
                 move_possible = check_move(col);
             }
             game_won = make_move(col, player2_char);
-            std::cout << field;
+            std::cout << fu::str(field);
             if(game_won){
                 std::cout << std::endl << "Player 2 won";
                 return;

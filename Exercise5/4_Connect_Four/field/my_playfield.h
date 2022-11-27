@@ -14,7 +14,7 @@ struct my_playfield: playfield {
     const static char player2=2;
 
     // the internal representation of the field
-    char rep[playfield::width][playfield::height]; // TODO: Why not switch height and width here?
+    char rep[playfield::width][playfield::height]; 
 
     int stoneat(int x, int y) const { return rep[x][y]; }
 

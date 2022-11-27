@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include "../field/field_wrapper.h"
+#include "../field/playfield.h"
+#include "../field/my_playfield.h"
 #include "player.h"
 #include "../game/gamelogic.h"
 

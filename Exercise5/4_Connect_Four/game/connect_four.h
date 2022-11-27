@@ -1,13 +1,14 @@
 #pragma once
 #include "gamelogic.h"
 #include "../field/field_wrapper.h"  
+#include "../field/my_playfield.h"
 #include <iostream>
 
 template <typename P, typename E>
 class connect_four{
     P player1; char player1_char = 1;
     E player2; char player2_char = 2;
-    playfield field;
+    my_playfield field;
     
     bool check_move(int col){
         bool res = false;
@@ -40,6 +41,12 @@ class connect_four{
 public:
     connect_four() { };
 
+    void test(){
+        int stone = field.stoneat(0,0);
+        std::cout << stone;
+        stone = 1;
+        std::cout << " => " << field.stoneat(0,0);
+    }
     void run(){
         for(;;){
             // Player1

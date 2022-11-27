@@ -73,11 +73,11 @@ namespace fu{
         return ss.str();
     }
 
-    void deleteat(char rep[playfield::width][playfield::height], int x, int y) { rep[x][y] = playfield::none; }
-    void insertat(char rep[playfield::width][playfield::height], char val, int x, int y) { rep[x][y] = val; }
-    int stoneat(char rep[playfield::width][playfield::height], int x, int y) { return rep[x][y]; }
+    void deleteat(char (&rep)[playfield::width][playfield::height], int x, int y) { rep[x][y] = playfield::none; }
+    void insertat(char (&rep)[playfield::width][playfield::height], char val, int x, int y) { rep[x][y] = val; }
+    int stoneat(char (&rep)[playfield::width][playfield::height], int x, int y) { return rep[x][y]; }
 
-    int insert(char rep[playfield::width][playfield::height], int col, char player){
+    int insert(char (&rep)[playfield::width][playfield::height], int col, char player){
         if(col < 0 || col >= playfield::width) throw std::invalid_argument("Choose col within field!");
         int h = playfield::height-1;
         while(h >= 0){
@@ -91,7 +91,7 @@ namespace fu{
 
     }
     
-    int insert(playfield &f, int col, char player){
+    int insert(playfield& f, int col, char player){
         // if(col < 0 || col >= f.width) throw std::invalid_argument("Choose col within field!");
         // int h = f.height-1;
         // while(h >= 0){

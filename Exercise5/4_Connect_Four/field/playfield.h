@@ -6,7 +6,6 @@ class playfield {
     const static int width=7;
     const static int height=6;
 
-    char rep[width][height]; // Added by me, needed for inserting, TODO: Remove if possible
     // the elements stored at individual field positions
     const static int none=0;
     const static int player1=1;

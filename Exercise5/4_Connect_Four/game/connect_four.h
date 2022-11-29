@@ -1,6 +1,5 @@
 #pragma once
 #include "gamelogic.h"
-#include "../field/field_wrapper.h"  
 #include "../field/my_playfield.h"
 #include <iostream>
 
@@ -20,7 +19,7 @@ class connect_four{
     }
 
     bool make_move(int col, char player){
-        fu::insert(field, col, player);
+        field.insert(col, player);
 
         // Check vertical
         int combo = gamelogic::vertical(field, col, player);
@@ -56,7 +55,7 @@ public:
                 move_possible = check_move(col);
             }
             bool game_won = make_move(col, player1_char);
-            std::cout << fu::str(field);
+            std::cout << field;
             if(game_won) {
                 std::cout << std::endl << "Player 1 won";
                 return;
@@ -68,7 +67,7 @@ public:
                 move_possible = check_move(col);
             }
             game_won = make_move(col, player2_char);
-            std::cout << fu::str(field);
+            std::cout << field;
             if(game_won){
                 std::cout << std::endl << "Player 2 won";
                 return;

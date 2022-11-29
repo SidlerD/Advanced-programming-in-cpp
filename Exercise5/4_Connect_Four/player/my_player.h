@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include "../field/field_wrapper.h"
 #include "../field/playfield.h"
 #include "../field/my_playfield.h"
 #include "player.h"
@@ -28,20 +27,20 @@ struct my_player: player{
 
     // returns the column where the player decides to insert his stone
     virtual int play(const playfield &field){
+        my_playfield f(field);
         if(round == 0){ // Save & make default play
             int col = 3; ++round; 
-            char rep[field.width][field.height]; memcpy(rep, field.rep, field.width*field.height*sizeof(char));
-            int row = fu::insert(rep, col, 1);
+            int row = f.insert(col, '0');
             first_round.x = col; first_round.y = row;
 
             return col; 
         }
         if(round == 1){ // Set correct chars
-            playerchar = field.stoneat(first_round.x, first_round.y);
+            playerchar = f.stoneat(first_round.x, first_round.y);
             enemychar = (playerchar == 1) ? 2 : 1;
         }
 
-        game::move my_play = get_best_play(field, playerchar);
+        game::move my_play = get_best_play(f, playerchar);
         
         if(my_play.score == -1) {
             std:: cout << "Error: Couldn't find any col to make points. Playing 3 as default" << std::endl;
@@ -49,7 +48,7 @@ struct my_player: player{
         }
         if(my_play.score == 4) return my_play.col;
 
-        game::move enemy_play = get_best_play(field, enemychar);
+        game::move enemy_play = get_best_play(f, enemychar);
         if(enemy_play.score == 4) return enemy_play.col;
         else return my_play.col;
     }
@@ -58,19 +57,17 @@ struct my_player: player{
     // virtual ~player() { free(name); }
 
 private:
-    game::move get_best_play(const playfield &f, char player){
+    game::move get_best_play(my_playfield &f, char player){
         int max_score = -1, max_col = 0;
-        char rep[playfield::width][playfield::height];
-        memcpy(rep, f.rep, f.width*f.height*sizeof(char));
 
         // Try all cols and check for highest combo
         for(int col=0; col<f.width; ++col){
-            int row = fu::insert(rep, col, player);
+            int row = f.insert(col, player);
             if(row == -1) continue;
             
             int score = gamelogic::best_play(f, col, player);
             if(score > max_score){ max_score = score; max_col = col; }
-            fu::deleteat(rep, col, row); // Reset field
+            f.deleteat(col, row); // Reset field
         }
         
         return game::move(max_score, max_col);

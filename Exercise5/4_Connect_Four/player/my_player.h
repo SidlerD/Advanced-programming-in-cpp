@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <stdexcept>
 #include "../field/playfield.h"
 #include "../field/my_playfield.h"
 #include "player.h"
@@ -58,7 +59,7 @@ struct my_player: player{
 
 private:
     game::move get_best_play(my_playfield &f, char player){
-        int max_score = -1, max_col = 0;
+        int max_score = -1, max_col = -1;
 
         // Try all cols and check for highest combo
         for(int col=0; col<f.width; ++col){
@@ -70,6 +71,7 @@ private:
             f.deleteat(col, row); // Reset field
         }
         
+        if(max_score == -1) throw std::runtime_error("Field seems to be full, no play possible");
         return game::move(max_score, max_col);
     }
 };

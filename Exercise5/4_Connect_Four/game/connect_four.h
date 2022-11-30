@@ -2,6 +2,7 @@
 #include "gamelogic.h"
 #include "../field/my_playfield.h"
 #include <iostream>
+#include "../../../Exercise4/3_Range/range.h"
 
 template <typename P, typename E>
 class connect_four{
@@ -18,6 +19,7 @@ class connect_four{
         return res;
     }
 
+    // returns true if game is over after move
     bool make_move(int col, char player){
         field.insert(col, player);
 
@@ -37,19 +39,20 @@ class connect_four{
         return false;
     }
 
+    bool isfull(){
+        for(int col: range(0, field.width)) {
+            if(field.stoneat(col, 0) == field.none) return false;
+        }
+        return true;
+    }
 public:
     connect_four() { };
 
-    void test(){
-        int stone = field.stoneat(0,0);
-        std::cout << stone;
-        stone = 1;
-        std::cout << " => " << field.stoneat(0,0);
-    }
     void run(){
+        bool move_possible = false; int col;
         for(;;){
             // Player1
-            bool move_possible = false; int col;
+            move_possible = false;
             while(!move_possible){
                 col = player1.play(field);
                 move_possible = check_move(col);
@@ -59,7 +62,11 @@ public:
             if(game_won) {
                 std::cout << std::endl << "Player 1 won";
                 return;
+            } else if(isfull()){
+                std::cout << std::endl << "Field is full, game is a tie";
+                return;
             }
+
             // Player2
             move_possible = false;
             while(!move_possible){
@@ -70,6 +77,9 @@ public:
             std::cout << field;
             if(game_won){
                 std::cout << std::endl << "Player 2 won";
+                return;
+            } else if(isfull()){
+                std::cout << std::endl << "Field is full, game is a tie";
                 return;
             }
         }

@@ -14,3 +14,7 @@ template <int A, int B>
 struct gcd{
     static const int res = _gcd<A, B>::res;
 };
+
+int gcdf(int a, int b){
+    return (b==0) ? a : gcdf(b, a%b);
+}

@@ -9,6 +9,11 @@ struct gcd<A, 0>{
     static const int res = A;
 };
 
-int gcdf(int a, int b){
+int nonconst_gcdf(int a, int b){
+    return (b==0) ? a : nonconst_gcdf(b, a%b);
+}
+constexpr int gcdf(int a, int b){
     return (b==0) ? a : gcdf(b, a%b);
 }
+
+// With constexpr
